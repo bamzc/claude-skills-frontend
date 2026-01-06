@@ -1,0 +1,90 @@
+#!/usr/bin/env node
+
+/**
+ * Claude Skills 自动安装脚本
+ * @author Bamzc
+ */
+
+import fs from 'fs-extra'
+import path from 'path'
+import { fileURLToPath } from 'url'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+
+// 颜色输出
+const colors = {
+  reset: '\x1b[0m',
+  green: '\x1b[32m',
+  yellow: '\x1b[33m',
+  blue: '\x1b[34m',
+  red: '\x1b[31m',
+}
+
+function log(message, color = 'reset') {
+  console.log(`${colors[color]}${message}${colors.reset}`)
+}
+
+async function installSkills() {
+  try {
+    log('\n🚀 开始安装 Claude Skills...', 'blue')
+
+    // 获取项目根目录（向上查找，直到找到 package.json）
+    let projectRoot = process.cwd()
+    while (!fs.existsSync(path.join(projectRoot, 'package.json'))) {
+      const parent = path.dirname(projectRoot)
+      if (parent === projectRoot) {
+        throw new Error('无法找到项目根目录（package.json）')
+      }
+      projectRoot = parent
+    }
+
+    log(`📁 项目根目录: ${projectRoot}`, 'blue')
+
+    // 目标目录
+    const targetDir = path.join(projectRoot, '.claude', 'skills')
+
+    // 源目录（npm 包中的 skills 目录）
+    const sourceDir = path.join(__dirname, '..', 'skills')
+
+    // 确保目标目录存在
+    await fs.ensureDir(targetDir)
+
+    // 获取所有 Skills
+    const skills = await fs.readdir(sourceDir)
+
+    log(`\n📦 发现 ${skills.length} 个 Skills:`, 'blue')
+
+    // 复制每个 Skill
+    for (const skill of skills) {
+      const sourcePath = path.join(sourceDir, skill)
+      const targetPath = path.join(targetDir, skill)
+
+      // 检查是否是目录
+      const stat = await fs.stat(sourcePath)
+      if (!stat.isDirectory()) continue
+
+      // 检查目标目录是否已存在
+      const exists = await fs.pathExists(targetPath)
+      if (exists) {
+        log(`  ⚠️  ${skill} (已存在，跳过)`, 'yellow')
+        continue
+      }
+
+      // 复制 Skill
+      await fs.copy(sourcePath, targetPath)
+      log(`  ✅ ${skill} (已安装)`, 'green')
+    }
+
+    log('\n🎉 Claude Skills 安装完成！', 'green')
+    log('\n💡 使用方法:', 'blue')
+    log('   在 Claude Code 对话中提及 Skill 名称即可使用', 'blue')
+    log('   例如: "请使用 frontend-code-review 审查这个文件"\n', 'blue')
+  } catch (error) {
+    log(`\n❌ 安装失败: ${error.message}`, 'red')
+    process.exit(1)
+  }
+}
+
+// 执行安装
+installSkills()

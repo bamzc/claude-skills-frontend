@@ -1,0 +1,39 @@
+{
+  "name": "claude-skills-frontend",
+  "version": "1.0.1",
+  "type": "module",
+  "description": "前端开发通用 Claude Skills 集合",
+  "author": "Bamzc",
+  "license": "MIT",
+  "keywords": [
+    "claude",
+    "claude-code",
+    "skills",
+    "frontend",
+    "code-review"
+  ],
+  "main": "index.js",
+  "bin": {
+    "install-claude-skills": "./bin/install.js"
+  },
+  "scripts": {
+    "postinstall": "node bin/install.js"
+  },
+  "files": [
+    "skills",
+    "bin",
+    "templates",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bamzc/claude-skills-frontend.git"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "devDependencies": {
+    "chalk": "^5.3.0",
+    "fs-extra": "^11.2.0"
+  }
+}

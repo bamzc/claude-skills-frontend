@@ -1,0 +1,22 @@
+# 测试文件
+*.test.js
+*.spec.js
+
+# 文档草稿
+drafts/
+docs/
+
+# 编辑器配置
+.vscode/
+.idea/
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# 日志
+*.log
+
+# 临时文件
+tmp/
+temp/
