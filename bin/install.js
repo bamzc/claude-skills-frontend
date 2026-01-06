@@ -29,8 +29,11 @@ async function installSkills() {
   try {
     log('\n🚀 开始安装 Claude Skills...', 'blue')
 
-    // 获取项目根目录（向上查找，直到找到 package.json）
-    let projectRoot = process.cwd()
+    // 获取项目根目录
+    // 优先使用 INIT_CWD（npm install 运行时的原始工作目录）
+    // 否则从当前目录向上查找 package.json
+    let projectRoot = process.env.INIT_CWD || process.cwd()
+
     while (!fs.existsSync(path.join(projectRoot, 'package.json'))) {
       const parent = path.dirname(projectRoot)
       if (parent === projectRoot) {
@@ -40,6 +43,13 @@ async function installSkills() {
     }
 
     log(`📁 项目根目录: ${projectRoot}`, 'blue')
+
+    // 检查是否是包自身的项目，如果是则跳过安装
+    const projectPkg = await fs.readJson(path.join(projectRoot, 'package.json'))
+    if (projectPkg.name === 'claude-skills-frontend') {
+      log('\n⏭️  检测到是包自身项目，跳过安装', 'yellow')
+      return
+    }
 
     // 目标目录
     const targetDir = path.join(projectRoot, '.claude', 'skills')

@@ -1,9 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(chmod:*)",
-      "Bash(npx install-claude-skills)",
-      "Bash(git update-index:*)"
+      "Bash(node bin/install.js:*)",
+      "Bash(npm install:*)"
     ]
   }
 }
