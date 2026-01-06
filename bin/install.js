@@ -66,14 +66,20 @@ async function installSkills() {
 
       // 检查目标目录是否已存在
       const exists = await fs.pathExists(targetPath)
-      if (exists) {
-        log(`  ⚠️  ${skill} (已存在，跳过)`, 'yellow')
-        continue
-      }
 
-      // 复制 Skill
-      await fs.copy(sourcePath, targetPath)
-      log(`  ✅ ${skill} (已安装)`, 'green')
+      // 复制 Skill（覆盖已存在的）
+      await fs.copy(sourcePath, targetPath, { overwrite: true })
+      log(`  ✅ ${skill} (${exists ? '已更新' : '已安装'})`, 'green')
+    }
+
+    // 复制 CLAUDE.md 到项目根目录
+    const claudeMdSource = path.join(__dirname, '..', 'CLAUDE.md')
+    const claudeMdTarget = path.join(projectRoot, 'CLAUDE.md')
+
+    if (await fs.pathExists(claudeMdSource)) {
+      const exists = await fs.pathExists(claudeMdTarget)
+      await fs.copy(claudeMdSource, claudeMdTarget, { overwrite: true })
+      log(`\n✅ CLAUDE.md ${exists ? '已更新' : '已复制到项目根目录'}`, 'green')
     }
 
     log('\n🎉 Claude Skills 安装完成！', 'green')

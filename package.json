@@ -1,6 +1,6 @@
 {
   "name": "claude-skills-frontend",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "type": "module",
   "description": "前端开发通用 Claude Skills 集合",
   "author": "Bamzc",
@@ -22,8 +22,8 @@
   "files": [
     "skills",
     "bin",
-    "templates",
-    "README.md"
+    "README.md",
+    "CLAUDE.md"
   ],
   "repository": {
     "type": "git",
