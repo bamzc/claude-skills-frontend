@@ -12,6 +12,7 @@
 |-------|------|----------|
 | `frontend-code-review` | 前端代码全面审查 | PR 审查、代码质量检查、性能审计 |
 | `skill-creator` | Skill 创建指南 | 创建新的 Claude Skills |
+| `ui-ux-pro-max` | UI/UX 设计智能助手 | UI 设计、样式选择、配色方案、字体搭配、响应式布局 |
 
 ## 🚀 快速开始
 
@@ -86,6 +87,41 @@ npx install-claude-skills
 - 创建新的 Skill
 - 更新现有 Skill
 - 学习 Skill 开发
+
+### ui-ux-pro-max
+
+**功能**：UI/UX 设计智能助手，提供全面的设计指导和最佳实践
+
+**核心能力**：
+- 50+ UI 设计风格（玻璃态、新拟态、极简主义、野蛮主义等）
+- 21 种配色方案（按产品类型分类）
+- 50 种字体搭配（含 Google Fonts 导入）
+- 20 种图表类型推荐
+- 8 种技术栈支持（React、Next.js、Vue、Svelte、SwiftUI、React Native、Flutter、Tailwind）
+
+**设计维度**：
+- 产品类型推荐（SaaS、电商、作品集、仪表板等）
+- 样式指南（颜色、效果、框架）
+- 排版设计（字体搭配、Google Fonts）
+- 配色方案（主色、辅色、CTA、背景、文本、边框）
+- 页面结构（落地页、英雄区、定价、社交证明）
+- UX 最佳实践（动画、无障碍、交互反馈）
+
+**支持技术栈**：
+- `html-tailwind`（默认）：Tailwind 工具类、响应式、无障碍
+- `react`：状态管理、Hooks、性能优化
+- `nextjs`：SSR、路由、图片优化
+- `vue`：Composition API、Pinia、Vue Router
+- `svelte`：Runes、Stores、SvelteKit
+- `swiftui`：视图、状态、导航、动画
+- `react-native`：组件、导航、列表
+- `flutter`：Widgets、状态、布局、主题
+
+**使用方式**：
+通过 Python 脚本搜索设计知识库，获取针对性的设计建议和代码实现指南。
+
+**前置要求**：
+需要安装 Python 3（macOS/Linux/Windows 均支持）
 
 ## 🔄 更新 Skills
 
