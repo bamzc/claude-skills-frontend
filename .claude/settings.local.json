@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(node bin/install.js:*)",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "Bash(bash -c:*)"
     ]
   }
 }
