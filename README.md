@@ -1,6 +1,6 @@
 # claude-skills-frontend
 
-> 前端开发通用 Claude Skills 集合
+> 前端开发通用 Claude Skills 集合（含 MCP 服务器自动配置）
 
 [![npm version](https://img.shields.io/npm/v/claude-skills-frontend.svg)](https://www.npmjs.com/package/claude-skills-frontend)
 [![downloads](https://badgen.net/npm/dt/claude-skills-frontend)](https://www.npmjs.com/package/claude-skills-frontend)
@@ -31,7 +31,16 @@ yarn add -D claude-skills-frontend
 
 ### 自动安装
 
-安装包后，Skills 会自动复制到项目的 `.claude/skills/` 目录。
+安装包后，会自动执行以下操作：
+
+1. **Skills 安装**：Skills 会自动复制到项目的 `.claude/skills/` 目录
+2. **MCP 服务器配置**：自动配置以下 MCP 服务器到 `~/.claude.json`：
+   - `memory` - 知识图谱记忆系统
+   - `sequential-thinking` - 顺序思考工具
+   - `context7` - 文档查询工具
+   - `chrome-devtools` - Chrome 调试工具
+   - `playwright` - 浏览器自动化工具
+   - `fetch` - HTTP 请求工具（需要先安装 uv：`brew install uv`）
 
 如果需要手动安装，可以运行：
 
@@ -39,12 +48,86 @@ yarn add -D claude-skills-frontend
 npx install-claude-skills
 ```
 
+**注意**：
+- MCP 服务器配置是全局的，会影响所有项目
+- 如果已经配置过，安装脚本会跳过，不会覆盖现有配置
+- 配置完成后需要重启 Claude Code 使配置生效
+
 ### 使用
 
 在 Claude Code 对话中提及 Skill 名称即可使用：
 
 ```
 你: 请使用 frontend-code-review 审查 src/components/Button.tsx
+```
+
+## 🔌 MCP 服务器配置
+
+安装包时会自动配置以下 MCP 服务器，提升 Claude Code 的能力：
+
+### 已配置的 MCP 服务器
+
+| 服务器 | 功能 | 依赖 |
+|--------|------|------|
+| **memory** | 知识图谱记忆系统，让 AI 记住对话中的重要信息 | Node.js |
+| **sequential-thinking** | 顺序思考工具，帮助 AI 将复杂问题分解为多个步骤 | Node.js |
+| **context7** | 文档查询工具，提供最新的库文档和代码示例 | Node.js |
+| **chrome-devtools** | Chrome 调试工具，自动化调试和性能分析 | Node.js |
+| **playwright** | 浏览器自动化工具，控制浏览器执行操作 | Node.js |
+| **fetch** | HTTP 请求工具，发送请求和抓取网页数据 | Python (uv) |
+
+### 安装 uv（可选）
+
+如果想使用 `fetch` MCP 服务器，需要先安装 uv：
+
+```bash
+# macOS/Linux
+brew install uv
+
+# 或使用官方安装脚本
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+### 手动配置 MCP 服务器
+
+如果自动配置失败，可以手动编辑 `~/.claude.json`：
+
+```json
+{
+  "mcpServers": {
+    "memory": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-memory"],
+      "type": "stdio"
+    },
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp"],
+      "type": "stdio"
+    }
+  }
+}
+```
+
+### 验证 MCP 配置
+
+安装完成后，可以验证 MCP 服务器是否正常运行：
+
+```bash
+claude mcp list
+```
+
+应该看到类似输出：
+
+```
+Checking MCP server health...
+
+memory: npx -y @modelcontextprotocol/server-memory - ✓ Connected
+sequential-thinking: npx -y @modelcontextprotocol/server-sequential-thinking - ✓ Connected
+context7: npx -y @upstash/context7-mcp - ✓ Connected
+chrome-devtools: npx -y chrome-devtools-mcp@latest - ✓ Connected
+playwright: npx -y @executeautomation/playwright-mcp-server - ✓ Connected
+fetch: uvx mcp-server-fetch - ✓ Connected
 ```
 
 ## 📚 Skills 详细说明

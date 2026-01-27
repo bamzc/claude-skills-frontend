@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2026-01-27
+
+### Added
+- 🔌 **自动配置 MCP 服务器**：安装时自动配置以下 MCP 服务器
+  - `memory` - 知识图谱记忆系统
+  - `sequential-thinking` - 顺序思考工具
+  - `context7` - 文档查询工具
+  - `chrome-devtools` - Chrome 调试工具
+  - `playwright` - 浏览器自动化工具
+  - `fetch` - HTTP 请求工具（需要 uv）
+- 🛠️ **智能检测**：自动检测 uvx 是否安装，决定是否配置 fetch 服务器
+- 📝 **详细文档**：添加 MCP 服务器配置说明和验证方法
+
+### Changed
+- 优化安装脚本，跳过已配置的服务器，避免覆盖用户自定义配置
+- 改进日志输出，显示配置统计信息
+
 ## [1.0.0] - 2026-01-06
 
 ### Added

@@ -51,20 +51,6 @@ npm version major  # 主版本号 +1
 npm publish
 \`\`\`
 
-### 3. 使用私有 npm registry（团队内部）
-
-如果不想公开发布，可以使用私有 registry：
-
-\`\`\`bash
-# 配置私有 registry
-npm config set registry https://your-private-registry.com
-
-# 发布到私有 registry
-npm publish
-\`\`\`
-
-或者使用 Verdaccio 搭建私有 npm 服务器。
-
 ## 在项目中使用
 
 ### 安装
@@ -145,8 +131,8 @@ cd claude-skills-frontend
 mkdir skills/custom-skill
 # 编写 SKILL.md
 
-# 发布到私有 registry
-npm publish --registry https://your-private-registry.com
+# 发布到 npm
+npm publish
 \`\`\`
 
 ### 3. 贡献 Skills
@@ -231,7 +217,7 @@ cp -r node_modules/claude-skills-frontend/skills/frontend-code-review .claude/sk
 
 1. Fork 这个包
 2. 添加自定义 Skills
-3. 发布到私有 npm registry
+3. 发布到 npm
 4. 团队成员安装你的包
 
 ## 最佳实践
