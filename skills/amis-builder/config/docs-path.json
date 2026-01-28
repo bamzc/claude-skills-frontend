@@ -1,0 +1,7 @@
+{
+  "amis_docs_root": "",
+  "components_dir": "components",
+  "concepts_dir": "concepts",
+  "extend_dir": "extend",
+  "_comment": "如果你有本地 amis 文档，请配置 amis_docs_root 路径，例如: /path/to/amis/docs/zh-CN"
+}

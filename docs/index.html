@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Skills 使用文档</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            border-radius: 10px;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        nav {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav h2 {
+            margin-bottom: 15px;
+            color: #667eea;
+        }
+
+        nav ul {
+            list-style: none;
+        }
+
+        nav li {
+            margin: 10px 0;
+        }
+
+        nav a {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 1.1em;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #764ba2;
+        }
+
+        .skill-card {
+            background: white;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .skill-card h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .skill-card h3 {
+            color: #764ba2;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .skill-card h4 {
+            color: #555;
+            margin-top: 15px;
+            margin-bottom: 8px;
+        }
+
+        .skill-card p {
+            margin: 10px 0;
+            line-height: 1.8;
+        }
+
+        .skill-card ul, .skill-card ol {
+            margin: 10px 0 10px 30px;
+        }
+
+        .skill-card li {
+            margin: 5px 0;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9em;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+        .badge-public {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .badge-private {
+            background: #FF9800;
+            color: white;
+        }
+
+        .badge-trigger {
+            background: #2196F3;
+            color: white;
+        }
+
+        pre {
+            background: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+        }
+
+        code {
+            font-family: "Courier New", Courier, monospace;
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+
+        .example {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border-left: 4px solid #4CAF50;
+        }
+
+        .warning {
+            background: #fff3e0;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border-left: 4px solid #FF9800;
+        }
+
+        .info {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border-left: 4px solid #2196F3;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            margin-top: 50px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            .container {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 Claude Skills 使用文档</h1>
+            <p>模块化技能扩展系统 - 为 Claude Code 提供专业领域能力</p>
+        </header>
+
+        <nav>
+            <h2>📑 目录</h2>
+            <ul>
+                <li><a href="#overview">项目概述</a></li>
+                <li><a href="#amis-builder">amis-builder - amis 框架专家</a></li>
+                <li><a href="#skill-creator">skill-creator - Skill 创建指南</a></li>
+                <li><a href="#frontend-code-review">frontend-code-review - 前端代码审查</a></li>
+                <li><a href="#ui-ux-pro-max">ui-ux-pro-max - UI/UX 设计助手</a></li>
+                <li><a href="#architecture">架构说明</a></li>
+            </ul>
+        </nav>
+
+        <!-- 项目概述 -->
+        <div class="skill-card" id="overview">
+            <h2>📖 项目概述</h2>
+
+            <p>Claude Skills 是一个模块化的技能扩展系统，通过 Skill 机制为 Claude Code 提供专业领域的知识和能力。</p>
+
+            <h3>核心特性</h3>
+            <ul>
+                <li><strong>模块化设计</strong>：每个 Skill 独立封装，易于维护</li>
+                <li><strong>灵活触发</strong>：基于关键词智能触发</li>
+                <li><strong>公开/私有分离</strong>：支持公开和私有 Skills</li>
+                <li><strong>易于扩展</strong>：标准化结构，快速开发新 Skill</li>
+            </ul>
+
+            <h3>Skill 分类</h3>
+
+            <h4>可用 Skills</h4>
+            <ul>
+                <li><span class="badge badge-public">公开</span> <strong>amis-builder</strong>: amis 低代码框架专家</li>
+                <li><span class="badge badge-public">公开</span> <strong>skill-creator</strong>: Skill 创建指南</li>
+                <li><span class="badge badge-public">公开</span> <strong>frontend-code-review</strong>: 前端代码审查</li>
+                <li><span class="badge badge-public">公开</span> <strong>ui-ux-pro-max</strong>: UI/UX 设计助手</li>
+            </ul>
+        </div>
+
+        <!-- amis-builder -->
+        <div class="skill-card" id="amis-builder">
+            <h2>🎯 amis-builder - amis 框架专家和知识库</h2>
+
+            <span class="badge badge-public">公开</span>
+            <span class="badge badge-trigger">触发词: amis, 低代码, schema</span>
+
+            <h3>核心定位</h3>
+            <p>amis 框架专家 + 知识库，提供：</p>
+            <ul>
+                <li>📚 <strong>知识库</strong>：回答 amis 使用问题（组件、属性、表达式、事件等）</li>
+                <li>🛠️ <strong>代码生成</strong>：根据需求生成 amis JSON schema</li>
+                <li>🔍 <strong>文档查询</strong>：实时获取 amis 官方文档</li>
+                <li>💡 <strong>最佳实践</strong>：参考项目实战经验</li>
+            </ul>
+
+            <h3>触发条件</h3>
+            <div class="info">
+                <strong>只有当你明确提到以下关键词时才会触发：</strong>
+                <ul>
+                    <li>amis、百度 amis、aisuda</li>
+                    <li>低代码、low-code</li>
+                    <li>schema、JSON schema</li>
+                    <li>amis 组件、amis 表达式</li>
+                </ul>
+            </div>
+
+            <div class="example">
+                <strong>✅ 会触发的示例：</strong>
+                <ul>
+                    <li>"amis 的 CRUD 组件怎么用？"</li>
+                    <li>"帮我生成一个 amis 表单"</li>
+                    <li>"用低代码生成一个列表页"</li>
+                </ul>
+            </div>
+
+            <div class="warning">
+                <strong>❌ 不会触发的示例：</strong>
+                <ul>
+                    <li>"帮我生成一个表单"（没提 amis）</li>
+                    <li>"用 React 生成表单"（明确要求 React）</li>
+                </ul>
+            </div>
+
+            <h3>使用场景</h3>
+
+            <h4>场景 1：询问 amis 使用问题（知识库模式）</h4>
+            <pre>你: amis 的 CRUD 组件怎么配置筛选条件？
+你: amis 表达式怎么写？
+你: 如何在 amis 中绑定点击事件？</pre>
+
+            <h4>场景 2：生成 amis 页面（代码生成模式）</h4>
+            <pre>你: 帮我生成一个 amis 表单，包含用户名、邮箱、头像字段</pre>
+            <p>Skill 会自动：</p>
+            <ol>
+                <li>分析字段类型</li>
+                <li>生成对应的 amis 组件</li>
+                <li>输出完整的 JSON schema</li>
+            </ol>
+
+            <h4>场景 3：生成可预览的 HTML 页面</h4>
+            <pre>你: 用 amis 生成一个用户表单的预览页面</pre>
+            <p>Skill 会生成包含完整 amis SDK 的 HTML 文件，可直接在浏览器中预览效果。</p>
+
+            <h3>技术特点</h3>
+            <ul>
+                <li>✅ 实时获取最新文档（从 GitHub Raw）</li>
+                <li>✅ 内置速查表（离线兜底）</li>
+                <li>✅ 项目模板参考</li>
+                <li>✅ 零配置，开箱即用</li>
+            </ul>
+        </div>
+
+        <!-- skill-creator -->
+        <div class="skill-card" id="skill-creator">
+            <h2>🛠️ skill-creator - Skill 创建指南</h2>
+
+            <span class="badge badge-public">公开</span>
+            <span class="badge badge-trigger">触发词: create skill, new skill</span>
+
+            <h3>功能说明</h3>
+            <p>提供创建新 Skill 的指导和最佳实践，帮助开发者快速构建高质量的 Skill。</p>
+
+            <h3>使用方式</h3>
+            <pre>你: 我想创建一个新的 skill
+你: 如何开发一个 Claude skill？</pre>
+
+            <h3>核心内容</h3>
+            <ul>
+                <li><strong>Skill 结构说明</strong>：标准目录结构和文件组织</li>
+                <li><strong>SKILL.md 编写规范</strong>：Frontmatter 和 Body 的编写要求</li>
+                <li><strong>触发条件设计</strong>：如何设计精准的触发机制</li>
+                <li><strong>最佳实践</strong>：Progressive Disclosure、资源组织等</li>
+            </ul>
+
+            <h3>Skill 创建流程</h3>
+            <ol>
+                <li><strong>理解需求</strong>：通过具体示例明确 Skill 的使用场景</li>
+                <li><strong>规划资源</strong>：确定需要的 scripts、references、assets</li>
+                <li><strong>初始化</strong>：运行 init_skill.py 生成模板</li>
+                <li><strong>编辑实现</strong>：实现资源文件并编写 SKILL.md</li>
+                <li><strong>打包发布</strong>：运行 package_skill.py 生成 .skill 文件</li>
+                <li><strong>迭代优化</strong>：根据实际使用反馈持续改进</li>
+            </ol>
+
+            <h3>核心原则</h3>
+            <ul>
+                <li><strong>简洁至上</strong>：只添加 Claude 不具备的知识</li>
+                <li><strong>适度自由</strong>：根据任务特性设置合适的约束程度</li>
+                <li><strong>渐进披露</strong>：通过三级加载系统管理上下文</li>
+            </ul>
+        </div>
+
+        <!-- frontend-code-review -->
+        <div class="skill-card" id="frontend-code-review">
+            <h2>🔍 frontend-code-review - 前端代码审查</h2>
+
+            <span class="badge badge-public">公开</span>
+            <span class="badge badge-trigger">触发词: code review, 代码审查</span>
+
+            <h3>功能说明</h3>
+            <p>专业的前端代码审查工具，对代码进行系统化审查，涵盖代码质量、性能、安全、可访问性等多个维度。</p>
+
+            <h3>支持的框架</h3>
+            <ul>
+                <li>React（包括 Hooks、Context、状态管理）</li>
+                <li>Vue 3（Composition API、Pinia、Vue Router）</li>
+                <li>Angular</li>
+                <li>原生 JavaScript/TypeScript</li>
+            </ul>
+
+            <h3>使用方式</h3>
+            <pre>你: 帮我审查这段代码
+你: 这个组件有什么问题？
+你: 对这个 PR 进行 code review</pre>
+
+            <h3>审查维度</h3>
+            <ul>
+                <li><strong>代码质量</strong>：命名规范、代码重复、单一职责、模块结构</li>
+                <li><strong>功能实现</strong>：业务逻辑、边界情况、错误处理、异步操作</li>
+                <li><strong>性能优化</strong>：重渲染、列表 key、打包体积、图片优化、网络请求</li>
+                <li><strong>安全性</strong>：XSS 漏洞、输入验证、敏感数据、CSRF 保护</li>
+                <li><strong>可访问性</strong>：语义化 HTML、ARIA 属性、键盘导航、颜色对比度</li>
+                <li><strong>框架特定</strong>：React Hooks、Vue Composition API、TypeScript 类型</li>
+                <li><strong>浏览器兼容</strong>：特性支持、CSS 前缀、polyfill、响应式设计</li>
+            </ul>
+
+            <h3>输出格式</h3>
+            <p>生成结构化的审查报告，包含：</p>
+            <ul>
+                <li>✅ <strong>优秀实践</strong>：代码中做得好的地方</li>
+                <li>⚠️ <strong>需要改进的问题</strong>：按类别、严重程度分类</li>
+                <li>📊 <strong>代码评分</strong>：综合评分（0-10分）和等级（S/A/B/C/D/F）</li>
+                <li>📝 <strong>改进建议</strong>：优先修复项和后续优化方向</li>
+            </ul>
+
+            <h3>评分等级</h3>
+            <ul>
+                <li>🏆 <strong>S 级（9.5-10分）</strong>：卓越，可作为最佳实践范本</li>
+                <li>🥇 <strong>A 级（8.5-9.4分）</strong>：优秀，生产级代码</li>
+                <li>🥈 <strong>B 级（7.0-8.4分）</strong>：良好，少量问题需修复</li>
+                <li>🥉 <strong>C 级（5.5-6.9分）</strong>：一般，需要认真修复优化</li>
+                <li>⚠️ <strong>D 级（4.0-5.4分）</strong>：较差，建议较大范围重构</li>
+                <li>❌ <strong>F 级（< 4.0分）</strong>：不合格，建议重写</li>
+            </ul>
+        </div>
+
+        <!-- ui-ux-pro-max -->
+        <div class="skill-card" id="ui-ux-pro-max">
+            <h2>🎨 ui-ux-pro-max - UI/UX 设计助手</h2>
+
+            <span class="badge badge-public">公开</span>
+            <span class="badge badge-trigger">触发词: UI, UX, 设计</span>
+
+            <h3>功能说明</h3>
+            <p>UI/UX 设计智能助手，提供可搜索的设计数据库，包含 UI 样式、色彩方案、字体配对、图表类型、产品推荐、UX 指南和技术栈最佳实践。</p>
+
+            <h3>核心能力</h3>
+            <ul>
+                <li>🎨 <strong>50+ UI 样式</strong>：Glassmorphism、Claymorphism、Minimalism、Brutalism 等</li>
+                <li>🎨 <strong>21 种色彩方案</strong>：按产品类型分类（SaaS、电商、医疗、美容等）</li>
+                <li>✍️ <strong>50 种字体配对</strong>：包含 Google Fonts 导入代码</li>
+                <li>📊 <strong>20 种图表类型</strong>：趋势、对比、时间线、漏斗等</li>
+                <li>🛠️ <strong>8 种技术栈</strong>：React、Next.js、Vue、Svelte、SwiftUI、React Native、Flutter、Tailwind</li>
+            </ul>
+
+            <h3>使用方式</h3>
+            <pre>你: 这个页面的 UI 怎么优化？
+你: 帮我设计一个登录页面
+你: 为医疗 SaaS 产品推荐配色方案</pre>
+
+            <h3>工作流程</h3>
+            <ol>
+                <li><strong>分析需求</strong>：提取产品类型、风格关键词、行业、技术栈</li>
+                <li><strong>搜索相关领域</strong>：使用 search.py 搜索多个领域
+                    <ul>
+                        <li>Product - 产品类型推荐</li>
+                        <li>Style - 详细样式指南</li>
+                        <li>Typography - 字体配对</li>
+                        <li>Color - 色彩方案</li>
+                        <li>Landing - 页面结构（如果是落地页）</li>
+                        <li>Chart - 图表推荐（如果是仪表板）</li>
+                        <li>UX - 最佳实践和反模式</li>
+                        <li>Stack - 技术栈指南（默认：html-tailwind）</li>
+                    </ul>
+                </li>
+                <li><strong>综合实现</strong>：基于搜索结果实现设计</li>
+            </ol>
+
+            <h3>专业 UI 规则</h3>
+            <ul>
+                <li>❌ <strong>禁止使用 emoji 作为图标</strong>：使用 SVG 图标（Heroicons、Lucide）</li>
+                <li>✅ <strong>稳定的悬停状态</strong>：使用颜色/透明度过渡，避免缩放导致布局偏移</li>
+                <li>✅ <strong>正确的品牌 logo</strong>：从 Simple Icons 获取官方 SVG</li>
+                <li>✅ <strong>光/暗模式对比度</strong>：确保两种模式下文本和元素都清晰可见</li>
+                <li>✅ <strong>浮动元素间距</strong>：浮动导航栏要有适当的边距</li>
+                <li>✅ <strong>交互反馈</strong>：所有可点击元素添加 cursor-pointer</li>
+            </ul>
+
+            <h3>交付前检查清单</h3>
+            <ul>
+                <li>视觉质量：无 emoji 图标、统一图标集、正确的品牌 logo</li>
+                <li>交互：cursor-pointer、悬停反馈、平滑过渡</li>
+                <li>光/暗模式：文本对比度、透明元素可见性、边框可见性</li>
+                <li>布局：浮动元素间距、无内容遮挡、响应式设计</li>
+                <li>可访问性：alt 文本、表单标签、颜色不是唯一指示器</li>
+            </ul>
+        </div>
+
+        <!-- 架构说明 -->
+        <div class="skill-card" id="architecture">
+            <h2>🏗️ 架构说明</h2>
+
+            <h3>Skill 标准结构</h3>
+            <pre>skill-name/
+├── SKILL.md                    # 核心指令（必需）
+├── scripts/                    # 可执行脚本（可选）
+├── references/                 # 参考文档（可选）
+└── assets/                     # 资源文件（可选）</pre>
+
+            <h3>触发机制</h3>
+            <ol>
+                <li>用户输入</li>
+                <li>Claude 读取所有 SKILL.md 的 frontmatter</li>
+                <li>根据 description 判断是否匹配</li>
+                <li>匹配成功 → 加载 SKILL.md 内容</li>
+                <li>执行 Skill 指令</li>
+            </ol>
+
+            <h3>公开/私有分离</h3>
+
+            <h4>公开项目（claude-skills-frontend）</h4>
+            <ul>
+                <li>发布到 GitHub 公开仓库</li>
+                <li>包含通用 Skills</li>
+                <li>任何人都可以使用</li>
+                <li>当前包含：amis-builder、skill-creator、frontend-code-review、ui-ux-pro-max</li>
+            </ul>
+
+            <h3>最佳实践</h3>
+            <ul>
+                <li><strong>description 要精确</strong>：明确触发条件和关键词</li>
+                <li><strong>体积要控制</strong>：< 500KB，避免影响性能</li>
+                <li><strong>文档要完整</strong>：SKILL.md 要包含完整的使用说明</li>
+                <li><strong>测试要充分</strong>：确保触发条件准确</li>
+            </ul>
+        </div>
+
+        <footer>
+            <p>© 2025 Claude Skills Project | Author: Bamzc</p>
+            <p>GitHub: <a href="https://github.com/bamzc/claude-skills-frontend" target="_blank">claude-skills-frontend</a></p>
+        </footer>
+    </div>
+</body>
+</html>

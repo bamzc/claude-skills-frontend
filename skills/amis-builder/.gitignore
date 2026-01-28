@@ -1,0 +1,13 @@
+# 本地配置文件（包含个人路径）
+config/docs-path.local.json
+
+# 文档缓存（自动下载的 amis 文档）
+data/
+
+# Python 缓存
+__pycache__/
+*.pyc
+*.pyo
+
+# macOS
+.DS_Store
