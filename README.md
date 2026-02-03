@@ -10,6 +10,7 @@
 
 | Skill | 描述 | 适用场景 |
 |-------|------|----------|
+| `agentation` | 可视化反馈工具栏 | 在 React 项目中添加元素标注工具，生成结构化反馈给 AI |
 | `frontend-code-review` | 前端代码全面审查 | PR 审查、代码质量检查、性能审计 |
 | `skill-creator` | Skill 创建指南 | 创建新的 Claude Skills |
 | `ui-ux-pro-max` | UI/UX 设计智能助手 | UI 设计、样式选择、配色方案、字体搭配、响应式布局 |
@@ -131,6 +132,36 @@ fetch: uvx mcp-server-fetch - ✓ Connected
 ```
 
 ## 📚 Skills 详细说明
+
+### agentation
+
+**功能**：在 React 项目中添加可视化元素标注工具栏
+
+**核心能力**：
+- 在网页上直接点击元素进行标注
+- 自动捕获 CSS 类名、选择器路径和位置信息
+- 生成结构化的 Markdown 格式反馈
+- 与 Claude Code、Cursor 等 AI 工具无缝集成
+
+**工作流程**：
+1. 在运行的应用中发现问题或需要改进的地方
+2. 使用 Agentation 工具栏标注相关元素
+3. 添加反馈说明（如 "按钮文字不清晰"）
+4. 复制生成的 Markdown 输出
+5. 粘贴给 AI 助手，AI 可以通过选择器精确定位代码
+
+**支持的项目类型**：
+- Next.js App Router / Pages Router
+- Vite + React
+- Create React App
+- 任何 React 18+ 项目
+
+**前置要求**：
+- React 18+
+- 仅在开发环境下加载
+
+**使用方式**：
+在 Claude Code 对话中提及 `agentation`，AI 会自动检测项目类型并配置工具栏。
 
 ### frontend-code-review
 

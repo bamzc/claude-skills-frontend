@@ -1,6 +1,6 @@
 {
   "name": "claude-skills-frontend",
-  "version": "1.3.0",
+  "version": "1.2.0",
   "type": "module",
   "description": "前端开发通用 Claude Skills 集合（含 MCP 服务器自动配置）",
   "author": "Bamzc",
@@ -10,7 +10,8 @@
     "claude-code",
     "skills",
     "frontend",
-    "code-review"
+    "code-review",
+    "agentation"
   ],
   "main": "index.js",
   "bin": {

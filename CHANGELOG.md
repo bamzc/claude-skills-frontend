@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2026-02-03
+
+### Added
+- 🎯 **新增 `agentation` Skill**：可视化元素标注工具
+  - 支持在 React 项目中添加 Agentation 工具栏
+  - 自动检测项目类型（Next.js App Router/Pages Router、Vite、CRA）
+  - 捕获 CSS 选择器和元素位置信息
+  - 生成结构化反馈给 AI 编码助手
+  - 支持所有 React 18+ 项目
+
+### Changed
+- 📝 更新 README.md，添加 agentation skill 详细说明
+- 🔧 优化 skill 配置，支持更多 React 项目类型
+
 ## [1.1.0] - 2026-01-27
 
 ### Added

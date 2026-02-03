@@ -6,7 +6,11 @@
       "Bash(bash -c:*)",
       "Bash(git add:*)",
       "Bash(git commit -m \"$\\(cat <<''EOF''\nchore: 移除私有 registry 相关说明，发布 v1.2.0\n\n- 删除 PACKAGE_GUIDE.md 中关于私有 npm registry 的说明\n- 统一改为公开发布到 npm 的说明\n- 保留 MCP 服务器自动配置功能\n- 版本号升级到 1.2.0\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "mcp__playwright__playwright_navigate",
+      "mcp__playwright__playwright_screenshot",
+      "mcp__playwright__playwright_evaluate",
+      "mcp__playwright__playwright_close"
     ]
   }
 }
